@@ -15,12 +15,23 @@ function spotifySearch() {
         query: input,
         limit: '1'
     }, function (err, data) {
+        var result = `Artist: ${data.tracks.items[0].artists[0].name} Song: ${data.tracks.items[0].name}\nAlbum: ${data.tracks.items[0].album.name}\nURL: ${data.tracks.items[0].preview_url}`;
         if (err) {
             return console.log('Error occurred: ' + err);
         }
         console.log("\n------------------------------------------------------");
-        console.log(`Artist: ${data.tracks.items[0].artists[0].name} Song: ${data.tracks.items[0].name}\nAlbum: ${data.tracks.items[0].album.name}\nURL: ${data.tracks.items[0].preview_url}`);
+        console.log(result);
         console.log("------------------------------------------------------\n");
+        var text = "\nResult: " + result + "\n";
+        fs.appendFile("log.txt", text, function (err) {
+
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("Logged");
+            }
+
+        });
     });
 }
 
@@ -39,10 +50,20 @@ function movieSearch() {
         }
         if (!error && response.statusCode === 200) {
 
-
+            var result = `Title: ${omdb.Title}\nYear: ${omdb.Year}\nImdb Rating: ${omdb.imdbRating}\nRotten Tomatoes Rating: ${omdb.Ratings[1].Value}\nCountry: ${omdb.Country}\nPlot: ${omdb.Plot}\nActors: ${omdb.Actors}`;
             console.log("\n------------------------------------------------------");
-            console.log(`Title: ${omdb.Title}\nYear: ${omdb.Year}\nImdb Rating: ${omdb.imdbRating}\nRotten Tomatoes Rating: ${omdb.Ratings[1].Value}\nCountry: ${omdb.Country}\nPlot: ${omdb.Plot}\nActors: ${omdb.Actors}`);
+            console.log(result);
             console.log("------------------------------------------------------\n");
+            var text = "\nResult: " + result + "\n";
+            fs.appendFile("log.txt", text, function (err) {
+
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log("Logged");
+                }
+
+            });
         }
     });
 }
